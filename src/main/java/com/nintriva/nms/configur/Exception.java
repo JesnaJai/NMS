@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 public class Exception {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorVo> handlerMethodArgsNotValidException(MethodArgumentNotValidException exception){
+    public ResponseEntity< List<ErrorVo>> handlerMethodArgsNotValidException(MethodArgumentNotValidException exception){
         List<ErrorVo> error = exception.getBindingResult().getAllErrors().stream().map(objectError -> ErrorVo.builder()
                 .fieldName(((FieldError) objectError).getField())
                 .message(List.of(Objects.requireNonNull(objectError.getDefaultMessage())))
                 .build())
                 .collect(Collectors.toList());
-return new ResponseEntity<>(error.get(0), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

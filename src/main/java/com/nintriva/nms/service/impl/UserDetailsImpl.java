@@ -46,7 +46,7 @@
         public ResponseEntity<Response> addEmployee(UserDetailsDto userDetailsDto) {
 
 
-            try {
+
 
                 if (userDetailsRepository.existsByEmployeeCode(userDetailsDto.getEmployeeCode())) {
                     Response response1 = Response.builder().success(false).message("employee_code is already taken!").build();
@@ -58,28 +58,6 @@
 
                     return new ResponseEntity<>(response2, HttpStatus.BAD_REQUEST);
                 }
-                    if(userDetailsDto.getFirst_name()==""){
-                        Response response5 = Response.builder().success(false).message("First name cannot be empty").build();
-                        return new ResponseEntity<>(response5,HttpStatus.BAD_REQUEST);
-                    }
-                if(userDetailsDto.getLast_name()==""){
-                    Response response6 = Response.builder().success(false).message("Last name cannot be empty").build();
-                    return new ResponseEntity<>(response6,HttpStatus.BAD_REQUEST);
-                }
-                if(userDetailsDto.getEmail()==""){
-                    Response response7 = Response.builder().success(false).message("Email cannot be empty").build();
-                    return new ResponseEntity<>(response7,HttpStatus.BAD_REQUEST);
-                }
-
-                if(userDetailsDto.getEmployeeCode()==""){
-                    Response response8 = Response.builder().success(false).message("Employee code cannot be empty").build();
-                    return new ResponseEntity<>(response8,HttpStatus.BAD_REQUEST);
-                }
-                if(userDetailsDto.getDepartment()==""){
-                    Response response9 = Response.builder().success(false).message("Department cannot be empty").build();
-                    return new ResponseEntity<>(response9,HttpStatus.BAD_REQUEST);
-                }
-
 
                 Keycloak keycloak = KeycloakBuilder.builder().serverUrl(authServerUrl)
                         .grantType(OAuth2Constants.PASSWORD).realm("master").clientId("admin-cli")
@@ -109,7 +87,7 @@
                 ud.setEmployeeCode(userDetailsDto.getEmployeeCode());
                 ud.setFirst_name(userDetailsDto.getFirst_name());
                 ud.setLast_name(userDetailsDto.getLast_name());
-                    ud.setEmail(userDetailsDto.getEmail());
+                ud.setEmail(userDetailsDto.getEmail());
 
                 ud.setDate_of_birth(userDetailsDto.getDate_of_birth());
                 ud.setJoining_date(userDetailsDto.getJoining_date());
@@ -128,26 +106,15 @@
                 ud.setWeekly_work_hour(userDetailsDto.getWeekly_work_hour());
                 ud.setAadhar_number(userDetailsDto.getAadhar_number());
                 ud.setDepartment(userDetailsDto.getDepartment());
-                try{
-                userDetailsRepository.save(ud);
-                Response response3 = Response.builder().success(true).message("User created!").build();
+                try {
+                    userDetailsRepository.save(ud);
+                    Response response3 = Response.builder().success(true).message("User created!").build();
                     return new ResponseEntity<>(response3, HttpStatus.OK);
+                } catch (Exception e) {
+                    Response response1 = Response.builder().success(false).message("invalid emailId").build();
+                    return new ResponseEntity<>(response1, HttpStatus.BAD_REQUEST);
                 }
-                catch (Exception e){
-                    Response response1=Response.builder().success(false).message("invalid emailId").build();
-                    return new ResponseEntity<>(response1,HttpStatus.BAD_REQUEST);
-                }
-
-            } catch (Exception e) {
-
-                Response response4 = Response.builder().success(false).message("Incomplete Field").build();
-                return new ResponseEntity<>(response4, HttpStatus.OK);
-            }
-
-//            return null;
-        }
-
-
+                        }
 
         @Override
         public ResponseEntity<?> employeeReg(SignUpDto signUpDto) {
@@ -169,5 +136,10 @@
                     .build());
             return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
+        }
+
+        @Override
+        public ResponseEntity<Response> updateEmployee(UserDetailsDto userDetailsDto) {
+        return null;
         }
     }

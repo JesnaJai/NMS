@@ -50,6 +50,9 @@ public class AuthController {
         //Create new user in keycloak
         return userDetails.addEmployee(userDetailsDto);
     }
-
+    @PostMapping("/Update")
+    public ResponseEntity<Response>updateUser(@RequestBody @Valid UserDetailsDto userUpdate){
+        return userDetails.updateEmployee(userUpdate);
+    }
 
 }
