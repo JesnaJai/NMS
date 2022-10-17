@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Data
 public class UserDetailsDto {
+    @Nullable private int id;
 
     private UUID userid;
     @NotEmpty(message = "first_name cannot be null")

@@ -1,3 +1,4 @@
---alter table nms_user_details add column createdAt Date ,add createBy varchar(100),
--- add updateAt Date ,
--- add updateBy varchar(100);
+--create sequence id;
+
+--alter table nms_user_details add column id default nextval('id_sequence'::regclass) ;
+--ALTER TABLE nms_user_details ALTER COLUMN id SET DEFAULT nextval('id_seq');

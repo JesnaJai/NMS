@@ -1,6 +1,7 @@
     package com.nintriva.nms.service.impl;
 
     import com.nintriva.nms.entity.User;
+    import com.nintriva.nms.entity.UserDetails;
     import com.nintriva.nms.payload.SignUpDto;
     import com.nintriva.nms.payload.UserDetailsDto;
     import com.nintriva.nms.repository.RoleRepository;
@@ -8,7 +9,7 @@
     import com.nintriva.nms.repository.UserEntityRepository;
     import com.nintriva.nms.repository.UserRepository;
     import com.nintriva.nms.response.Response;
-    import com.nintriva.nms.service.UserDetails;
+    import com.nintriva.nms.service.UserDetailsinterface;
     import lombok.RequiredArgsConstructor;
     import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
     import org.keycloak.OAuth2Constants;
@@ -23,13 +24,13 @@
     import org.springframework.security.crypto.password.PasswordEncoder;
     import org.springframework.stereotype.Service;
 
-    import javax.validation.constraints.Email;
     import java.util.UUID;
     @Service
     @RequiredArgsConstructor
-    public class UserDetailsImpl implements UserDetails {
+    public class UserDetailsImpl implements UserDetailsinterface {
 
         private final PasswordEncoder passwordEncoder;
+        @Autowired
         private final UserDetailsRepository userDetailsRepository;
         private final UserRepository userRepository;
         private final RoleRepository roleRepository;
@@ -84,36 +85,77 @@
                 userDetailsDto.setStatusCode(response.getStatus());
                 userDetailsDto.setStatus(response.getStatusInfo().toString());
 
-                ud.setEmployeeCode(userDetailsDto.getEmployeeCode());
-                ud.setFirst_name(userDetailsDto.getFirst_name());
-                ud.setLast_name(userDetailsDto.getLast_name());
-                ud.setEmail(userDetailsDto.getEmail());
 
-                ud.setDate_of_birth(userDetailsDto.getDate_of_birth());
-                ud.setJoining_date(userDetailsDto.getJoining_date());
-                ud.setManager(userDetailsDto.getManager());
-                ud.setMobile(userDetailsDto.getMobile());
-                ud.setEmployee_address(userDetailsDto.getEmployee_address());
-                ud.setEmployment_type(userDetailsDto.getEmployment_type());
-                ud.setWork_status(userDetailsDto.getWork_status());
-                ud.setSalary(userDetailsDto.getSalary());
-                ud.setProbation_status(userDetailsDto.getProbation_status());
-                ud.setProbation_period(userDetailsDto.getProbation_period());
-                ud.setGender(userDetailsDto.getGender());
-                ud.setDesignation(userDetailsDto.getDesignation());
-                ud.setPAN_number(userDetailsDto.getPAN_number());
-                ud.setDaily_work_hour(userDetailsDto.getDaily_work_hour());
-                ud.setWeekly_work_hour(userDetailsDto.getWeekly_work_hour());
-                ud.setAadhar_number(userDetailsDto.getAadhar_number());
-                ud.setDepartment(userDetailsDto.getDepartment());
-                try {
-                    userDetailsRepository.save(ud);
-                    Response response3 = Response.builder().success(true).message("User created!").build();
-                    return new ResponseEntity<>(response3, HttpStatus.OK);
-                } catch (Exception e) {
-                    Response response1 = Response.builder().success(false).message("invalid emailId").build();
-                    return new ResponseEntity<>(response1, HttpStatus.BAD_REQUEST);
-                }
+//            userRepository.save(User.builder()
+//                    .employeeCode(signUpDto.getEmployeeCode())
+//                    .username(signUpDto.getUsername())
+//                    .email(signUpDto.getEmail())
+//                    .password(passwordEncoder.encode(signUpDto.getPassword()))
+//                    .mobile(signUpDto.getMobile())
+//                    .date_time(signUpDto.getDate_time())
+//                    .build());
+//            return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+
+
+
+//            using builder
+
+            userDetailsRepository.save(UserDetails.builder()
+                    .employeeCode(userDetailsDto.getEmployeeCode())
+                    .first_name(userDetailsDto.getFirst_name())
+                    .last_name(userDetailsDto.getLast_name())
+                    .email(userDetailsDto.getEmail())
+                    .date_of_birth(userDetailsDto.getDate_of_birth())
+                    .joining_date(userDetailsDto.getJoining_date())
+                    .manager(userDetailsDto.getManager())
+                    .mobile(userDetailsDto.getMobile())
+                    .employee_address(userDetailsDto.getEmployee_address())
+                    .employment_type(userDetailsDto.getEmployment_type())
+                    .work_status(userDetailsDto.getWork_status())
+                            .salary(userDetailsDto.getSalary())
+                            .probation_period(userDetailsDto.getProbation_period())
+                            .probation_status(userDetailsDto.getProbation_status())
+                            .gender(userDetailsDto.getGender())
+                            .designation(userDetailsDto.getDesignation())
+                            .PAN_number(userDetailsDto.getPAN_number())
+                            .daily_work_hour(userDetailsDto.getDaily_work_hour())
+                            .weekly_work_hour(userDetailsDto.getWeekly_work_hour())
+                            .aadhar_number(userDetailsDto.getAadhar_number())
+                            .department(userDetailsDto.getDepartment())
+                    .build());
+            Response response1= Response.builder().success(true).message("User registered successfully").build();
+                     return new ResponseEntity<>(response1, HttpStatus.OK);
+
+
+//            ud.setEmployeeCode(userDetailsDto.getEmployeeCode());
+//                ud.setFirst_name(userDetailsDto.getFirst_name());
+//                ud.setLast_name(userDetailsDto.getLast_name());
+//                ud.setEmail(userDetailsDto.getEmail());
+//                ud.setDate_of_birth(userDetailsDto.getDate_of_birth());
+//                ud.setJoining_date(userDetailsDto.getJoining_date());
+//                ud.setManager(userDetailsDto.getManager());
+//                ud.setMobile(userDetailsDto.getMobile());
+//                ud.setEmployee_address(userDetailsDto.getEmployee_address());
+//                ud.setEmployment_type(userDetailsDto.getEmployment_type());
+//                ud.setWork_status(userDetailsDto.getWork_status());
+//                ud.setSalary(userDetailsDto.getSalary());
+//                ud.setProbation_status(userDetailsDto.getProbation_status());
+//                ud.setProbation_period(userDetailsDto.getProbation_period());
+//                ud.setGender(userDetailsDto.getGender());
+//                ud.setDesignation(userDetailsDto.getDesignation());
+//                ud.setPAN_number(userDetailsDto.getPAN_number());
+//                ud.setDaily_work_hour(userDetailsDto.getDaily_work_hour());
+//                ud.setWeekly_work_hour(userDetailsDto.getWeekly_work_hour());
+//                ud.setAadhar_number(userDetailsDto.getAadhar_number());
+//                ud.setDepartment(userDetailsDto.getDepartment());
+//                try {
+//                    userDetailsRepository.save(ud);
+//                    Response response3 = Response.builder().success(true).message("User created!").build();
+//                    return new ResponseEntity<>(response3, HttpStatus.OK);
+//                } catch (Exception e) {
+//                    Response response2 = Response.builder().success(false).message("invalid emailId").build();
+//                    return new ResponseEntity<>(response2, HttpStatus.BAD_REQUEST);
+//                }
                         }
 
         @Override
@@ -139,7 +181,36 @@
         }
 
         @Override
-        public ResponseEntity<Response> updateEmployee(UserDetailsDto userDetailsDto) {
-        return null;
+        public ResponseEntity<Response> updateEmployee(int id ,UserDetailsDto userDetailsDto) {
+
+            UserDetails userDetails = userDetailsRepository.findById(id).orElse(null);
+            userDetails.setId(userDetailsDto.getId());
+            userDetails.setFirst_name(userDetailsDto.getFirst_name());
+            userDetails.setLast_name(userDetailsDto.getLast_name());
+            userDetails.setEmployeeCode(userDetailsDto.getEmployeeCode());
+            userDetails.setEmail(userDetailsDto.getEmail());
+            userDetails.setDepartment(userDetailsDto.getDepartment());
+            userDetails.setMobile(userDetailsDto.getMobile());
+            userDetails.setDate_of_birth(userDetailsDto.getDate_of_birth());
+            userDetails.setJoining_date(userDetailsDto.getJoining_date());
+            userDetails.setManager(userDetailsDto.getManager());
+            userDetails.setEmployee_address(userDetailsDto.getEmployee_address());
+            userDetails.setEmployment_type(userDetailsDto.getEmployment_type());
+            userDetails.setWork_status(userDetailsDto.getWork_status());
+            userDetails.setSalary(userDetailsDto.getSalary());
+            userDetails.setProbation_status(userDetailsDto.getProbation_status());
+            userDetails.setProbation_period(userDetailsDto.getProbation_period());
+            userDetails.setGender(userDetailsDto.getGender());
+            userDetails.setDesignation(userDetailsDto.getDesignation());
+            userDetails.setPAN_number(userDetailsDto.getPAN_number());
+            userDetails.setDaily_work_hour(userDetailsDto.getDaily_work_hour());
+            userDetails.setWeekly_work_hour(userDetailsDto.getWeekly_work_hour());
+            userDetails.setAadhar_number(userDetailsDto.getAadhar_number());
+
+//            return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+
+            Response response4= Response.builder().success(true).message("Updated successfully").build();
+            return new ResponseEntity<>(response4, HttpStatus.OK);
+//            userDetailsRepository.save(userDetails);
         }
     }

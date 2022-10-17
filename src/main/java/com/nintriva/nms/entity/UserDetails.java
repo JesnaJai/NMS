@@ -1,6 +1,9 @@
 package com.nintriva.nms.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.beans.factory.annotation.Required;
@@ -14,12 +17,15 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "nms_user_details")
 
 public class UserDetails {
-    @Id
+
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type="org.hibernate.type.PostgresUUIDType")
@@ -32,10 +38,10 @@ public class UserDetails {
     private String employeeCode;
     @NotEmpty
     private String email;
-
-
     @NotEmpty(message = "Department cannot be null")
     private String department;
+    @Id
+    @Nullable private int id;
     @Nullable private String mobile;
     @Nullable private Date date_of_birth;
     @Nullable private Date joining_date;

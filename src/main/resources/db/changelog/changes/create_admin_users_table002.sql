@@ -1,9 +1,10 @@
 
---create sequence userid;
+create sequence id_sequence;
 create table nms_user_details(
-    userid uuid primary key not null ,
+    userid uuid not null ,
 --    default nextval('userid_sequence'::regclass) ,
 --    userid int  ,
+  id int primary key default nextval('id_sequence'::regclass) ,
   first_name varchar(100),
   last_name varchar(100),
   employee_code varchar(100),
