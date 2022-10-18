@@ -24,6 +24,7 @@
     import org.springframework.security.crypto.password.PasswordEncoder;
     import org.springframework.stereotype.Service;
 
+    import javax.transaction.Transactional;
     import java.util.UUID;
     @Service
     @RequiredArgsConstructor
@@ -184,7 +185,7 @@
         public ResponseEntity<Response> updateEmployee(int id ,UserDetailsDto userDetailsDto) {
 
             UserDetails userDetails = userDetailsRepository.findById(id).orElse(null);
-            userDetails.setId(userDetailsDto.getId());
+//            userDetails.setId(userDetailsDto.getId());
             userDetails.setFirst_name(userDetailsDto.getFirst_name());
             userDetails.setLast_name(userDetailsDto.getLast_name());
             userDetails.setEmployeeCode(userDetailsDto.getEmployeeCode());
@@ -208,9 +209,9 @@
             userDetails.setAadhar_number(userDetailsDto.getAadhar_number());
 
 //            return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
-
+            userDetailsRepository.save(userDetails);
             Response response4= Response.builder().success(true).message("Updated successfully").build();
             return new ResponseEntity<>(response4, HttpStatus.OK);
-//            userDetailsRepository.save(userDetails);
+
         }
     }
