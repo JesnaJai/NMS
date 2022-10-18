@@ -46,7 +46,7 @@ public class AuthController {
         //Create new user in keycloak
         return userDetails.addEmployee(userDetailsDto);
     }
-    @PostMapping("/Update/{id}")
+    @PutMapping("/Update/{id}")
     public ResponseEntity<Response>updateUser(@PathVariable int id, @RequestBody @Valid UserDetailsDto userUpdate){
         return userDetails.updateEmployee(id,userUpdate);
     }
