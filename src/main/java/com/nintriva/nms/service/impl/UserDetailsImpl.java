@@ -47,9 +47,6 @@
         @Override
         public ResponseEntity<Response> addEmployee(UserDetailsDto userDetailsDto) {
 
-
-
-
                 if (userDetailsRepository.existsByEmployeeCode(userDetailsDto.getEmployeeCode())) {
                     Response response1 = Response.builder().success(false).message("employee_code is already taken!").build();
                     return new ResponseEntity<>(response1, HttpStatus.BAD_REQUEST);
@@ -87,21 +84,9 @@
                 userDetailsDto.setStatus(response.getStatusInfo().toString());
 
 
-//            userRepository.save(User.builder()
-//                    .employeeCode(signUpDto.getEmployeeCode())
-//                    .username(signUpDto.getUsername())
-//                    .email(signUpDto.getEmail())
-//                    .password(passwordEncoder.encode(signUpDto.getPassword()))
-//                    .mobile(signUpDto.getMobile())
-//                    .date_time(signUpDto.getDate_time())
-//                    .build());
-//            return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
-
-
-
 //            using builder
-
             userDetailsRepository.save(UserDetails.builder()
+                    .userid(UUID.randomUUID())
                     .employeeCode(userDetailsDto.getEmployeeCode())
                     .first_name(userDetailsDto.getFirst_name())
                     .last_name(userDetailsDto.getLast_name())
@@ -113,50 +98,20 @@
                     .employee_address(userDetailsDto.getEmployee_address())
                     .employment_type(userDetailsDto.getEmployment_type())
                     .work_status(userDetailsDto.getWork_status())
-                            .salary(userDetailsDto.getSalary())
-                            .probation_period(userDetailsDto.getProbation_period())
-                            .probation_status(userDetailsDto.getProbation_status())
-                            .gender(userDetailsDto.getGender())
-                            .designation(userDetailsDto.getDesignation())
-                            .PAN_number(userDetailsDto.getPAN_number())
-                            .daily_work_hour(userDetailsDto.getDaily_work_hour())
-                            .weekly_work_hour(userDetailsDto.getWeekly_work_hour())
-                            .aadhar_number(userDetailsDto.getAadhar_number())
-                            .department(userDetailsDto.getDepartment())
+                    .salary(userDetailsDto.getSalary())
+                    .probation_period(userDetailsDto.getProbation_period())
+                    .probation_status(userDetailsDto.getProbation_status())
+                    .gender(userDetailsDto.getGender())
+                    .designation(userDetailsDto.getDesignation())
+                    .PAN_number(userDetailsDto.getPAN_number())
+                    .daily_work_hour(userDetailsDto.getDaily_work_hour())
+                    .weekly_work_hour(userDetailsDto.getWeekly_work_hour())
+                    .aadhar_number(userDetailsDto.getAadhar_number())
+                    .department(userDetailsDto.getDepartment())
                     .build());
             Response response1= Response.builder().success(true).message("User registered successfully").build();
                      return new ResponseEntity<>(response1, HttpStatus.OK);
 
-
-//            ud.setEmployeeCode(userDetailsDto.getEmployeeCode());
-//                ud.setFirst_name(userDetailsDto.getFirst_name());
-//                ud.setLast_name(userDetailsDto.getLast_name());
-//                ud.setEmail(userDetailsDto.getEmail());
-//                ud.setDate_of_birth(userDetailsDto.getDate_of_birth());
-//                ud.setJoining_date(userDetailsDto.getJoining_date());
-//                ud.setManager(userDetailsDto.getManager());
-//                ud.setMobile(userDetailsDto.getMobile());
-//                ud.setEmployee_address(userDetailsDto.getEmployee_address());
-//                ud.setEmployment_type(userDetailsDto.getEmployment_type());
-//                ud.setWork_status(userDetailsDto.getWork_status());
-//                ud.setSalary(userDetailsDto.getSalary());
-//                ud.setProbation_status(userDetailsDto.getProbation_status());
-//                ud.setProbation_period(userDetailsDto.getProbation_period());
-//                ud.setGender(userDetailsDto.getGender());
-//                ud.setDesignation(userDetailsDto.getDesignation());
-//                ud.setPAN_number(userDetailsDto.getPAN_number());
-//                ud.setDaily_work_hour(userDetailsDto.getDaily_work_hour());
-//                ud.setWeekly_work_hour(userDetailsDto.getWeekly_work_hour());
-//                ud.setAadhar_number(userDetailsDto.getAadhar_number());
-//                ud.setDepartment(userDetailsDto.getDepartment());
-//                try {
-//                    userDetailsRepository.save(ud);
-//                    Response response3 = Response.builder().success(true).message("User created!").build();
-//                    return new ResponseEntity<>(response3, HttpStatus.OK);
-//                } catch (Exception e) {
-//                    Response response2 = Response.builder().success(false).message("invalid emailId").build();
-//                    return new ResponseEntity<>(response2, HttpStatus.BAD_REQUEST);
-//                }
                         }
 
         @Override
@@ -208,7 +163,6 @@
             userDetails.setWeekly_work_hour(userDetailsDto.getWeekly_work_hour());
             userDetails.setAadhar_number(userDetailsDto.getAadhar_number());
 
-//            return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
             userDetailsRepository.save(userDetails);
             Response response4= Response.builder().success(true).message("Updated successfully").build();
             return new ResponseEntity<>(response4, HttpStatus.OK);

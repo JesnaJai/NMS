@@ -3,8 +3,7 @@
  role_name varchar(20) not null
  );
 
---create sequence userId_sequence;
---
+
 create table nms_users (
     userid uuid primary key not null,
 --    default nextval('userid_sequence'::regclass) ,
@@ -14,10 +13,8 @@ create table nms_users (
     password varchar(255) not null,
     mobile varchar(25) ,
     dateFormat date
---     FOREIGN KEY (id) REFERENCES roles(id)
+
     );
---insert into users(user_id, user_name , email,password)
---values (1 , 'jesna' , 'jes@gmail.com', 'jes123');
 
 create table nms_user_roles(
     userid uuid ,

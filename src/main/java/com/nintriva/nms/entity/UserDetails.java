@@ -41,6 +41,7 @@ public class UserDetails {
     @NotEmpty(message = "Department cannot be null")
     private String department;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Nullable private int id;
     @Nullable private String mobile;
     @Nullable private Date date_of_birth;
